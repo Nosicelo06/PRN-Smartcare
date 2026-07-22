@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCare - Register</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="form-box">
+
+        <h2>Create Account</h2>
+        <p>Register to access SmartCare Clinic System</p>
+
+        <form align="middle" style="color: rgb(32, 178, 88);" method="POST">
+            {% csrf_token %}
+
+            <input type="text" name="Fname" placeholder="Fname" required>
+            <br><br>
+            <input type="text" name="Lname" placeholder="Lname" required>
+            <br><br>
+            <input type="text"name="Surname" placeholder="Surname" required>
+            <br><br>
+            <input type="email" name="email" placeholder="Email Address" required>
+            <br><br>
+            <input type="Cellnumber" placeholder="Cellnumber" required>
+            <br><br>
+            <input type="text" name="role" placeholder="role" required>
+            <br><br>
+            <input type="password" id="password" name="password1" placeholder="Password" required>
+            <br><br>
+            <input type="password" id="confirmPassword" name="password2" placeholder="Confirm Password" required>
+
+            <button type="submit">Register</button>
+
+        </form>
+
+        <p>
+            Already have an account?
+            <a href="{% url 'login' %}">Login</a>
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>
