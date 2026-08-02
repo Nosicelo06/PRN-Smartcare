@@ -20,21 +20,22 @@
         <form align="middle" style="color: rgb(32, 178, 88);" method="POST">
             {% csrf_token %}
 
-            <input type="text" name="Fname" placeholder="Fname" required>
+            <input type="text" name="first_name" placeholder="First name" required>
             <br><br>
-            <input type="text" name="Lname" placeholder="Lname" required>
+            <input type="text" name="last_name" placeholder="Last name" required>
             <br><br>
-            <input type="text"name="Surname" placeholder="Surname" required>
+            <input type="text"name="surname" placeholder="Surname" required>
             <br><br>
             <input type="email" name="email" placeholder="Email Address" required>
             <br><br>
-            <input type="Cellnumber" placeholder="Cellnumber" required>
+            <input type="text" name= "cellnumber" placeholder="Cellnumber" required>
             <br><br>
-            <input type="text" name="role" placeholder="role" required>
+            <input type="text" name="role" placeholder="Role" required>
             <br><br>
             <input type="password" id="password" name="password1" placeholder="Password" required>
             <br><br>
             <input type="password" id="confirmPassword" name="password2" placeholder="Confirm Password" required>
+            <br><br>
 
             <button type="submit">Register</button>
 
