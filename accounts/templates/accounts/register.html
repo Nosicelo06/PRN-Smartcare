@@ -16,7 +16,11 @@
 
         <h2>Create Account</h2>
         <p>Register to access SmartCare Clinic System</p>
-
+        {% if messages %}
+    {% for message in messages %}
+        <p style="color:red;">{{ message }}</p>
+    {% endfor %}
+{% endif %}
         <form align="middle" style="color: rgb(32, 178, 88);" method="POST">
             {% csrf_token %}
 
@@ -28,13 +32,20 @@
             <br><br>
             <input type="email" name="email" placeholder="Email Address" required>
             <br><br>
-            <input type="text" name= "cellnumber" placeholder="Cellnumber" required>
+            <input type="text" name= "cell_number" placeholder="Cell number" required>
             <br><br>
-            <input type="text" name="role" placeholder="Role" required>
+            <select name = "role" required> 
+                <option value="">Select Role</option>
+                <option value="admin">Administrator</option>
+                <option value="Receptionist">Receptionist</option>
+                <option value="Doctor">Doctor</option>
+                <option value="Nurse">Nurse</option>
+                <option value="Pharmacist">Pharmacist</option>
+            </select>
             <br><br>
-            <input type="password" id="password" name="password1" placeholder="Password" required>
+            <input type="password" id="password name="password1" placeholder="Password" required>
             <br><br>
-            <input type="password" id="confirmPassword" name="password2" placeholder="Confirm Password" required>
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
             <br><br>
 
             <button type="submit">Register</button>
