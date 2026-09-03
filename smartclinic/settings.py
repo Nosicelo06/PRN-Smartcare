@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
-    'Patients',
+    'patients',
 ]
 
 MIDDLEWARE = [
@@ -120,3 +120,15 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS =[
     BASE_DIR/"static",
 ]
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+DEFAULT_FROM_EMAIL = "PRN SmartCare <noreply@prnsmartcare.com>"
+
+# Auth redirects
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'patients:list'
+LOGOUT_REDIRECT_URL = 'login'
+
+# Media files (needed for Patient.photo uploads)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

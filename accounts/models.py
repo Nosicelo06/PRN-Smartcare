@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-# Create your models here.
+# create your models here
 class StaffProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
@@ -13,6 +13,8 @@ class StaffProfile(models.Model):
         ("Receptionist", "Receptionist"),
         ("Doctor", "Doctor"),
         ("Nurse", "Nurse"),
-        ("Pharmacist","Phamacist"),
+        ("Pharmacist", "Phamacist"),
     ]
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES,)
+
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES)
+    
