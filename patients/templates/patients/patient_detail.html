@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ patient.full_name }} - PRN SmartCare</title>
+    <link rel="stylesheet" href="{% static 'css/patients.css' %}">
+</head>
+<body>
+
+<nav class="patients-nav">
+    <div class="logo"><a href="{% url 'home' %}">PRN SmartCare</a></div>
+    <div class="nav-links">
+        <a href="{% url 'patients:list' %}">&larr; Back to patient list</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+</nav>
+
+<div class="page-container">
+
+    <div class="detail-header">
+        <h1>{{ patient.full_name }}</h1>
+        <span class="prn-badge">PRN: {{ patient.prn }}</span>
+        <div class="detail-actions">
+            <a href="{% url 'patients:update' patient.pk %}" class="btn-small">Edit</a>
+            <a href="{% url 'patients:delete' patient.pk %}" class="btn-small danger">Delete</a>
+        </div>
+    </div>
+
+    <div class="detail-grid">
+
+        <div class="detail-card">
+            <h3>Personal Info</h3>
+            <p><strong>National ID:</strong> {{ patient.national_id }}</p>
+            <p><strong>Date of Birth:</strong> {{ patient.date_of_birth }} ({{ patient.age }} yrs)</p>
+            <p><strong>Gender:</strong> {{ patient.get_gender_display }}</p>
+            <p><strong>Marital Status:</strong> {{ patient.get_marital_status_display|default:"—" }}</p>
+        </div>
+
+        <div class="detail-card">
+            <h3>Contact</h3>
+            <p><strong>Phone:</strong> {{ patient.phone_number }}</p>
+            <p><strong>Email:</strong> {{ patient.email|default:"—" }}</p>
+            <p><strong>Address:</strong> {{ patient.address|default:"—" }}</p>
+            <p><strong>City:</strong> {{ patient.city|default:"—" }}</p>
+        </div>
+
+        <div class="detail-card">
+            <h3>Emergency Contact</h3>
+            <p><strong>Name:</strong> {{ patient.emergency_contact_name|default:"—" }}</p>
+            <p><strong>Relationship:</strong> {{ patient.emergency_contact_relationship|default:"—" }}</p>
+            <p><strong>Phone:</strong> {{ patient.emergency_contact_phone|default:"—" }}</p>
+        </div>
+
+        <div class="detail-card">
+            <h3>Medical Info</h3>
+            <p><strong>Blood Group:</strong> {{ patient.get_blood_group_display }}</p>
+            <p><strong>Allergies:</strong> {{ patient.allergies|default:"—" }}</p>
+            <p><strong>Chronic Conditions:</strong> {{ patient.chronic_conditions|default:"—" }}</p>
+            <p><strong>Current Medications:</strong> {{ patient.current_medications|default:"—" }}</p>
+            <p><strong>Past Surgeries:</strong> {{ patient.past_surgeries|default:"—" }}</p>
+            <p><strong>Family Medical History:</strong> {{ patient.family_medical_history|default:"—" }}</p>
+        </div>
+
+        <div class="detail-card">
+            <h3>Registration</h3>
+            <p><strong>Registered at:</strong> {{ patient.registered_at_clinic }}</p>
+            <p><strong>Registered by:</strong> {{ patient.registered_by }}</p>
+            <p><strong>Created:</strong> {{ patient.created_at }}</p>
+            <p><strong>Last Updated:</strong> {{ patient.updated_at }}</p>
+        </div>
+
+        <div class="detail-card">
+            <h3>Notes</h3>
+            <p>{{ patient.notes|default:"—" }}</p>
+        </div>
+
+    </div>
+
+    <div class="visits-section">
+        <h3>Visit History (all clinics)</h3>
+        {% if patient.visits.all %}
+            <table class="patients-table">
+                <thead>
+                    <tr><th>Date</th><th>Clinic</th><th>Reason</th><th>Attended By</th></tr>
+                </thead>
+                <tbody>
+                    {% for visit in patient.visits.all %}
+                    <tr>
+                        <td>{{ visit.visit_date }}</td>
+                        <td>{{ visit.clinic.code }}</td>
+                        <td>{{ visit.reason|default:"—" }}</td>
+                        <td>{{ visit.attended_by }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No visits recorded yet.</p>
+        {% endif %}
+    </div>
+
+</div>
+
+</body>
+</html>

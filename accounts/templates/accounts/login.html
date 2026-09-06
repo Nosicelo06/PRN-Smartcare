@@ -1,31 +1,36 @@
-    {%load static %}
+    {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>PRN SmartCare - Login</title>
 
-    <link rel="stylesheet" href="{% static 'css/style.css'%}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <div class="login-box">
-    <h1 align ="middle" style="color: black"> WELCOME!!</h1>
+    <h1 align="middle" style="color: black"> WELCOME!!</h1>
     <h2 align="middle" style="color: black">PRN SMARTCARE</h2>
     <br>
-    <h3 style="color: black;"> <i>Welcome to PRN SmartCare,your secure gateway to patient file management. 
+    <h3 style="color: black;"> <i>Welcome to PRN SmartCare, your secure gateway to patient file management.
         Authorized healthcare professionals can register, log in, and safely create or access patient records with confidence. Our platform is built to protect sensitive information while streamlining your workflow for better care delivery.</i></h3>
     <br>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p style="color:red;">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
     <FORM align="middle" method="post">
         {% csrf_token %}
         <label for="username"> USERNAME</label><br>
-        <input type="text" id="username" name="username" placeholder="Enter your username"></input><br><br>
+        <input type="text" id="username" name="email" placeholder="Enter your email"><br><br>
         <label for="password">PASSWORD</label><br>
-        <input type="text" id="password" name="password" placeholder="Enter your password"><br><br>
+        <input type="password" id="password" name="password" placeholder="Enter your password"><br><br>
         <button type="submit">Log In</button>
         <br>
-    
-    <!--Don't have an account?-->
 
     <p><a href="{% url 'register' %}">Register</a></p>
 

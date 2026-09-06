@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if patient %}Edit{% else %}New{% endif %} Patient - PRN SmartCare</title>
+    <link rel="stylesheet" href="{% static 'css/patients.css' %}">
+</head>
+<body>
+
+<nav class="patients-nav">
+    <div class="logo"><a href="{% url 'home' %}">PRN SmartCare</a></div>
+    <div class="nav-links">
+        <a href="{% url 'patients:list' %}">&larr; Back to patient list</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+</nav>
+
+<div class="page-container narrow">
+
+    <div class="form-box">
+        <h2>{% if object %}Edit Patient File{% else %}Register New Patient{% endif %}</h2>
+
+        {% if object %}
+            <p class="subtitle">PRN: {{ object.prn }}</p>
+        {% endif %}
+
+        {% if form.non_field_errors %}
+            <div class="messages">
+                {% for error in form.non_field_errors %}
+                    <p class="error-msg">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %} *{% endif %}</label>
+                    {{ field }}
+                    {% if field.help_text %}
+                        <small class="field-help">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <p class="error-msg">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="submit-btn">
+                {% if object %}Save Changes{% else %}Register Patient{% endif %}
+            </button>
+        </form>
+    </div>
+
+</div>
+
+</body>
+</html>

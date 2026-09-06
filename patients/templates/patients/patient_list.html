@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patients - PRN SmartCare</title>
+    <link rel="stylesheet" href="{% static 'css/patients.css' %}">
+</head>
+<body>
+
+<nav class="patients-nav">
+    <div class="logo"><a href="{% url 'home' %}">PRN SmartCare</a></div>
+    <div class="nav-links">
+        <span>Welcome, {{ user.first_name|default:user.username }}</span>
+        <a href="{% url 'patients:register_patient' %}" class="btn-small">+ New Patient</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+</nav>
+
+<div class="page-container">
+
+    <div class="page-header">
+        <h1>Patient Files</h1>
+        <p>{{ total_patients }} active patient{{ total_patients|pluralize }} across all clinics</p>
+    </div>
+
+    <form method="get" class="search-bar">
+        <input type="text" name="q" placeholder="Search by name, PRN, national ID, or phone" value="{{ request.GET.q }}">
+        <button type="submit">Search</button>
+    </form>
+
+    {% if patients %}
+    <table class="patients-table">
+        <thead>
+            <tr>
+                <th>PRN</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Phone</th>
+                <th>Registered At</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for patient in patients %}
+            <tr>
+                <td>{{ patient.prn }}</td>
+                <td>{{ patient.full_name }}</td>
+                <td>{{ patient.age }}</td>
+                <td>{{ patient.get_gender_display }}</td>
+                <td>{{ patient.phone_number }}</td>
+                <td>{{ patient.registered_at_clinic.code }}</td>
+                <td class="actions">
+                    <a href="{% url 'patients:detail' patient.pk %}">View</a>
+                    <a href="{% url 'patients:update' patient.pk %}">Edit</a>
+                    <a href="{% url 'patients:delete' patient.pk %}" class="danger">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if is_paginated %}
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">&laquo; Prev</a>
+        {% endif %}
+        <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Next &raquo;</a>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    {% else %}
+    <div class="empty-state">
+        <p>No patient files yet.</p>
+        <a href="{% url 'patients:register_patient' %}" class="btn-small">Register the first patient</a>
+    </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>

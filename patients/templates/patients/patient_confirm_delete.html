@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Patient - PRN SmartCare</title>
+    <link rel="stylesheet" href="{% static 'css/patients.css' %}">
+</head>
+<body>
+
+<nav class="patients-nav">
+    <div class="logo"><a href="{% url 'home' %}">PRN SmartCare</a></div>
+    <div class="nav-links">
+        <a href="{% url 'patients:list' %}">&larr; Back to patient list</a>
+    </div>
+</nav>
+
+<div class="page-container narrow">
+    <div class="form-box">
+        <h2>Delete Patient File</h2>
+        <p class="subtitle">
+            Are you sure you want to remove <strong>{{ object.full_name }}</strong>
+            (PRN: {{ object.prn }})? This file will be archived and hidden from the patient list.
+        </p>
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="submit-btn danger-btn">Yes, delete this file</button>
+            <a href="{% url 'patients:detail' object.pk %}" class="btn-small">Cancel</a>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
