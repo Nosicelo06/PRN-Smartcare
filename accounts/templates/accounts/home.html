@@ -7,51 +7,43 @@
     <title>PRN SmartCare</title>
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
 </head>
-<body class="home-page">
-    <nav>
+<body>
 
+    <nav>
         <div class="logo">
             <a href="{% url 'home' %}">PRN SmartCare</a>
         </div>
 
         <ul>
-
-            <li><a href="">Home</a></li>
-
-            <li><a href="">About</a></li>
-
-            <li><a href="">Contact</a></li>
-
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
         </ul>
 
+        <div class="nav-buttons">
+            {% if user.is_authenticated %}
+                <a href="{% url 'patients:list' %}" class="btn">Dashboard</a>
+                <form method="post" action="{% url 'logout' %}" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit" class="logout-btn">Logout</button>
+</form>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn">Login</a>
+                <a href="{% url 'register' %}" class="btn">Register</a>
+            {% endif %}
+        </div>
     </nav>
 
     <section class="hero">
+        <h1>Welcome to PRN SmartCare</h1>
+        <p>Smart Clinic File Management System that helps healthcare professionals manage patient records securely and efficiently.</p>
 
-        <div class="left">
-
-            <h1>Welcome to <span>PRN SmartCare</span></h1>
-
-            <p>
-                Smart Clinic File Management System that helps
-                healthcare professionals manage patient records
-                securely and efficiently.
-            </p>
-
-            <div class="buttons">
-
-                <a href="{% url 'login' %}" class="login-btn">
-                    Login
-                </a>
-
-                <a href="{% url 'register' %}" class="register-btn">
-                    Register
-                </a>
-
-            </div>
-
+        {% if not user.is_authenticated %}
+        <div class="buttons">
+            <a href="{% url 'login' %}" class="btn">Login</a>
+            <a href="{% url 'register' %}" class="btn">Register</a>
         </div>
-
+        {% endif %}
     </section>
 
 </body>

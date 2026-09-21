@@ -1,8 +1,90 @@
-body{
-    background-image: url("../images/homepage-bg.png") ;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    min-height: 100vh;
-    margin: 0;
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: Arial, sans-serif;
+    color: #222;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 40px;
+    background: #1e824c;
+}
+
+.logo a {
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-decoration: none;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+nav ul a {
+    color: #fff;
+    text-decoration: none;
+}
+
+nav ul a:hover {
+    text-decoration: underline;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 8px 16px;
+    background: #fff;
+    color: #1e824c;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background: #eaf5ee;
+}
+
+.hero {
+    text-align: center;
+    padding: 80px 20px;
+    background: #f4f9f6;
+}
+
+.hero h1 {
+    color: #1e824c;
+    margin-bottom: 16px;
+}
+
+.hero p {
+    max-width: 600px;
+    margin: 0 auto 24px;
+    color: #444;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+.logout-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 0;
+    font-family: inherit;
+}
+.logout-btn:hover {
+    text-decoration: underline;
 }

@@ -42,6 +42,7 @@ class PatientCreateView(LoginRequiredMixin, CreateView):
     model = Patient
     form_class = PatientForm
     template_name = 'patients/patient_form.html'
+    success_url = reverse_lazy('patients:list')
 
     def form_valid(self, form):
         form.instance.registered_by = self.request.user
