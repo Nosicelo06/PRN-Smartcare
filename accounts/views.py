@@ -77,7 +77,7 @@ def register_view(request):
         uid = urlsafe_base64_encode(force_bytes(user.pk))
         token = default_token_generator.make_token(user)
 
-        verification_link = f"http://127.0.0.1:8000/verify/{uid}/{token}/"
+        verification_link = request.build_absolute_uri(f"/verify/{uid}/{token}/")
 
         # Send verification email
         send_mail(
