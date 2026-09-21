@@ -38,7 +38,7 @@ class Patient(models.Model):
     date_of_birth = models.DateField()
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     marital_status = models.CharField(max_length=10, choices=MARITAL_STATUS_CHOICES, blank=True)
-    photo = models.ImageField(upload_to='patient_photos/', blank=True, null=True)
+    
 
     # Contact
     phone_number = models.CharField(max_length=20)
