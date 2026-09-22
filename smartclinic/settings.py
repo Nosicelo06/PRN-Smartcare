@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'anymail',
     'accounts',
     'clinics',
     'patients',
@@ -106,15 +107,12 @@ STORAGES = {
 }
 
 
-# Email (Gmail SMTP)
-
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = f"PRN SmartCare <{EMAIL_HOST_USER}>"
+# Email (Brevo HTTP API — avoids Render's SMTP port block)
+EMAIL_BACKEND = "anymail.backends.brevo.EmailBackend"
+ANYMAIL = {
+    "BREVO_API_KEY": config('BREVO_API_KEY'),
+}
+DEFAULT_FROM_EMAIL = "PRN SmartCare <prnsmartcare@gmail.com>"
 
 
 # Auth redirects
