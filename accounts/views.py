@@ -138,4 +138,3 @@ def verify_email(request, uidb64, token):
     )
 
     return redirect("login")
-```
