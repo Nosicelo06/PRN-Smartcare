@@ -1,4 +1,5 @@
 print("THIS IS MY VIEWS FILE")
+from django.conf import settings
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
@@ -10,8 +11,10 @@ from django.utils.encoding import force_bytes
 
 from .models import StaffProfile
 
+
 def home_view(request):
     return render(request, "accounts/home.html")
+
 
 def login_view(request):
     if request.method == "POST":
@@ -32,6 +35,7 @@ def login_view(request):
 
     return render(request, "accounts/login.html")
 
+
 def register_view(request):
     if request.method == "POST":
         first_name = request.POST.get("first_name")
@@ -50,7 +54,10 @@ def register_view(request):
 
         # Check if email already exists
         if User.objects.filter(email=email).exists():
-            messages.error(request, "An account with this email already exists.")
+            messages.error(
+                request,
+                "An account with this email already exists."
+            )
             return redirect("register")
 
         # Create a user
@@ -62,6 +69,7 @@ def register_view(request):
             password=password1,
         )
 
+        # User must verify their email before logging in
         user.is_active = False
         user.save()
 
@@ -77,16 +85,19 @@ def register_view(request):
         uid = urlsafe_base64_encode(force_bytes(user.pk))
         token = default_token_generator.make_token(user)
 
-        verification_link = request.build_absolute_uri(f"/verify/{uid}/{token}/")
+        verification_link = request.build_absolute_uri(
+            f"/verify/{uid}/{token}/"
+        )
 
-        # Send verification email
+        # Send verification email through Brevo
         send_mail(
             "Verify your PRN SmartCare account",
             f"Hello {first_name},\n\n"
             f"Please click the link below to verify your email:\n\n"
             f"{verification_link}\n\n"
-            f"Thank you,\nPRN SmartCare",
-            "noreply@prnsmartcare.com",
+            f"Thank you,\n"
+            f"PRN SmartCare",
+            settings.DEFAULT_FROM_EMAIL,
             [email],
         )
 
@@ -98,6 +109,7 @@ def register_view(request):
         return redirect("login")
 
     return render(request, "accounts/register.html")
+
 
 def verify_email(request, uidb64, token):
     from django.utils.http import urlsafe_base64_decode
@@ -113,8 +125,17 @@ def verify_email(request, uidb64, token):
         user.is_active = True
         user.save()
 
-        messages.success(request, "Your email has been verified! You can now log in.")
+        messages.success(
+            request,
+            "Your email has been verified! You can now log in."
+        )
+
         return redirect("login")
 
-    messages.error(request, "The verification link is invalid or has expired.")
+    messages.error(
+        request,
+        "The verification link is invalid or has expired."
+    )
+
     return redirect("login")
+```
